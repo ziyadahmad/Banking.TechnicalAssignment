@@ -28,6 +28,7 @@ namespace Banking.TechnicalAssignment.Api
                 {
                     services.AddOptions();
                     services.AddTransient<ICustomerService, CustomerService>();
+                    services.AddTransient<IAccountService, AccountService>();
                 });
     }
 }
