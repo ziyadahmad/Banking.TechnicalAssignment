@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Banking.TechnicalAssignment.Api.Services;
+using Banking.TechnicalAssignment.Api.Core.Domain;
+using Banking.TechnicalAssignment.Api.Core.Respositories;
+using Banking.TechnicalAssignment.Api.Core.Services;
+using Banking.TechnicalAssignment.Api.Persistance.Repositories;
+using Banking.TechnicalAssignment.Api.Persistance.Respositories;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Banking.TechnicalAssignment.Api
 {
@@ -27,8 +25,12 @@ namespace Banking.TechnicalAssignment.Api
             .ConfigureServices((hostcontext, services) =>
                 {
                     services.AddOptions();
+                    services.AddSingleton<ILiteDbContext, LiteDbContext>();
+                    services.Configure<LiteDbOptions>(hostcontext.Configuration.GetSection("LiteDbOptions"));
+
                     services.AddTransient<ICustomerService, CustomerService>();
                     services.AddTransient<IAccountService, AccountService>();
+                    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
                 });
     }
 }
