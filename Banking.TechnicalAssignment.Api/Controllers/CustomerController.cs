@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Banking.TechnicalAssignment.Api.Domain;
-using Banking.TechnicalAssignment.Api.Services;
-using Microsoft.AspNetCore.Http;
+using Banking.TechnicalAssignment.Api.Core.Domain;
+using Banking.TechnicalAssignment.Api.Core.Dto;
+using Banking.TechnicalAssignment.Api.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,30 +13,22 @@ namespace Banking.TechnicalAssignment.Api.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ILogger<CustomerController> _logger;
-        private readonly ICustomerService _customerService;        
+        private readonly ICustomerService _customerService;
 
         public CustomerController(ILogger<CustomerController> logger, ICustomerService customerService, IMapper mapper)
         {
             _logger = logger;
-            _customerService = customerService;            
+            _customerService = customerService;
         }
 
         [HttpPost]
-        public ActionResult AddCustomer(Customer customer)
+        [Route("{id}")]
+        public ActionResult AddCustomer(int id, CustomerDto customer)
         {
             try
             {
-                if (customer == null || customer.CustomerId == 0)
-                {
-                    return BadRequest();
-                }
-
-                if (_customerService.AddCustomer(customer))
-                {
-                    return Ok();
-                }
-
-                return BadRequest();
+                _customerService.AddCustomer(id, customer);
+                return Ok();
             }
             catch (Exception ex)
             {

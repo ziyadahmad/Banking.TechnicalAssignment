@@ -1,77 +1,87 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Banking.TechnicalAssignment.Api.Domain;
-using Banking.TechnicalAssignment.Api.Services;
+using AutoMapper;
+using Banking.TechnicalAssignment.Api.Core;
+using Banking.TechnicalAssignment.Api.Core.Domain;
+using Banking.TechnicalAssignment.Api.Core.Dto;
+using Banking.TechnicalAssignment.Api.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Banking.TechnicalAssignment.Api.Controllers
 {
-    [Route("api/account")]
+    [Route("api/v1/account")]
     [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
         private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
 
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService, ICustomerService customerService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, ICustomerService customerService, IMapper mapper)
         {
             _logger = logger;
             _accountService = accountService;
             _customerService = customerService;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        [Route("{customerId}")]
-        public ActionResult OpenCurrentAccount(int customerId, double initialCredit)
+        [Route("opencurrent")]
+        public ActionResult OpenCurrentAccount(AccountDto accountDto)
         {
             try
             {
-                var customer = _customerService.GetCustomerById(customerId);
-                if (customer == null)
-                {
-                    return NotFound();
-                }
-
-                var account = new Account
-                {
-                    AccountId = customerId,
-                    CustomerId = customerId,
-                    Balance = initialCredit
-                };
-
-                _accountService.CreateNewAccount(account);
-
-                return StatusCode(201);
+                _accountService.CreateNewAccount(accountDto);
+                return CreatedAtAction(nameof(GetAccount), new { id = accountDto.CustomerId }, "New account is created");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(500);
             }
         }
 
         [HttpGet]
-        [Route("{customerId}")]
-        public ActionResult GetAccountSummary(int customerId)
+        [Route("{id}")]
+        public ActionResult GetAccount(int id)
         {
             try
             {
-                var customer = _customerService.GetCustomerById(customerId);
+                var account = _accountService.GetAccount(id);
+
+                if(account == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(account);                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("summary/{id}")]
+        public ActionResult GetAccountSummary(int id)
+        {
+            try
+            {
+                var customer = _customerService.GetCustomerById(id);
                 if (customer == null)
                 {
                     return NotFound();
                 }
 
-                _accountService.GetAccountSummary(customerId);
-
-                return StatusCode(201);
+                return Ok(_accountService.GetAccountSummary(customer)); 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(500);
             }
         }
