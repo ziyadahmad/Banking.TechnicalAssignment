@@ -7,7 +7,7 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
 {
     public interface ICustomerService
     {
-        void AddCustomer(int id, CustomerDto customerDto);
+        int AddCustomer(CustomerDto customerDto);
 
         Customer GetCustomerById(int id);
 

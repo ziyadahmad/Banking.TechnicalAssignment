@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using AutoMapper;
 using Banking.TechnicalAssignment.Api.Core.Domain;
 using Banking.TechnicalAssignment.Api.Core.Dto;
@@ -9,20 +10,21 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly IRepository<Customer> _repository;
+        private readonly ICustomerRepository _repository;
         private readonly IMapper _mapper;
 
-        public CustomerService(IRepository<Customer> repository, IMapper mapper)
+        public CustomerService(ICustomerRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public void AddCustomer(int id, CustomerDto customerDto)
+        public int AddCustomer(CustomerDto customerDto)
         {
             var customer = _mapper.Map<Customer>(customerDto);
-            customer.CustomerId = id;            
+            customer.CustomerId = _repository.NextCustomerId();
             _repository.Add(customer);
+            return customer.CustomerId;
         }
 
         public Customer GetCustomerById(int id)
@@ -33,6 +35,6 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
         public IEnumerable<CustomerDto> GetAllCustomers()
         {            
             return _mapper.Map<IEnumerable<CustomerDto>>(_repository.GetAll());            
-        }
+        }                
     }
 }

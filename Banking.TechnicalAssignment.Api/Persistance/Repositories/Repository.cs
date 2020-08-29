@@ -8,7 +8,7 @@ namespace Banking.TechnicalAssignment.Api.Persistance.Respositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly ILiteDatabase _liteDatabase;
+        protected readonly ILiteDatabase _liteDatabase;
 
         public Repository(ILiteDbContext liteDbContext)
         {
