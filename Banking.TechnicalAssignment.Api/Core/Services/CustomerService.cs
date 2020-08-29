@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Banking.TechnicalAssignment.Api.Core.Domain;
 using Banking.TechnicalAssignment.Api.Core.Dto;
@@ -20,13 +21,18 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
         public void AddCustomer(int id, CustomerDto customerDto)
         {
             var customer = _mapper.Map<Customer>(customerDto);
-            customer.CustomerId = id;
+            customer.CustomerId = id;            
             _repository.Add(customer);
         }
 
         public Customer GetCustomerById(int id)
         {
             return _repository.Get(x => x.CustomerId == id);
+        }
+
+        public IEnumerable<CustomerDto> GetAllCustomers()
+        {            
+            return _mapper.Map<IEnumerable<CustomerDto>>(_repository.GetAll());            
         }
     }
 }

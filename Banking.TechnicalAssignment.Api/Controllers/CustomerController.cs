@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Banking.TechnicalAssignment.Api.Controllers
-{
-    [Route("api/customer")]
+{    
+    [Route("api/v1/customer")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -21,14 +21,28 @@ namespace Banking.TechnicalAssignment.Api.Controllers
             _customerService = customerService;
         }
 
-        [HttpPost]
-        [Route("{id}")]
-        public ActionResult AddCustomer(int id, CustomerDto customer)
+        [HttpPost]        
+        public ActionResult AddCustomer(CustomerDto customer)
         {
             try
             {
-                _customerService.AddCustomer(id, customer);
+                _customerService.AddCustomer(customer);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("getall")]
+        public ActionResult GetAllCustomers()
+        {
+            try
+            {
+                return Ok(_customerService.GetAllCustomers());
             }
             catch (Exception ex)
             {

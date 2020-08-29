@@ -10,8 +10,9 @@ namespace Banking.TechnicalAssignment.Api.Core.Respositories
     {
         TEntity Get(Expression<Func<TEntity, bool>> predicate);
 
-        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> GetAll();
 
+        IEnumerable<TEntity> GetAllById(Expression<Func<TEntity, bool>> predicate);
         void Add(TEntity entity);
     }
 }

@@ -15,7 +15,7 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
 
         public IEnumerable<AccountTransaction> GetTransactions(int accountId)
         {
-            return _repository.GetAll(x => x.AccountId == accountId);
+            return _repository.GetAllById(x => x.AccountId == accountId);
         }
 
         public void InsertTransaction(AccountTransaction transaction)

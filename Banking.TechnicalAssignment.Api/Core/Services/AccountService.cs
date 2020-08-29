@@ -44,7 +44,7 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
             {
                 Customer = _mapper.Map<CustomerDto>(customer),
                 Account = _mapper.Map<AccountDto>(_accountRepository.Get(x => x.AccountId == customer.CustomerId)),
-                Transactions = _mapper.Map<IEnumerable<AccountTransactionDto>>(_transactionRepository.GetAll(x => x.AccountId == customer.CustomerId))
+                Transactions = _mapper.Map<IEnumerable<AccountTransactionDto>>(_transactionRepository.GetAllById(x => x.AccountId == customer.CustomerId))
             };                        
         }
     }

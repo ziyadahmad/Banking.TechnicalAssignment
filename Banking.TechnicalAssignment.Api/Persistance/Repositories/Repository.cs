@@ -12,22 +12,27 @@ namespace Banking.TechnicalAssignment.Api.Persistance.Respositories
 
         public Repository(ILiteDbContext liteDbContext)
         {
-            _liteDatabase = liteDbContext.Database;            
+            _liteDatabase = liteDbContext.Database;
         }
 
         public void Add(TEntity entity)
-        {            
-            _liteDatabase.GetCollection<TEntity>(nameof(TEntity)).Insert(entity);
+        {
+            _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).Insert(entity);
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> predicate)
         {
-            return _liteDatabase.GetCollection<TEntity>(nameof(TEntity)).FindOne(predicate);
+            return _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).FindOne(predicate);
         }
 
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> GetAllById(Expression<Func<TEntity, bool>> predicate)
         {
-            return _liteDatabase.GetCollection<TEntity>(nameof(TEntity)).Find(predicate);
+            return _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).Find(predicate);
+        }
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).FindAll();
         }
     }
 }
