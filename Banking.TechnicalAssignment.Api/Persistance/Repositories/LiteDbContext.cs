@@ -12,6 +12,9 @@ namespace Banking.TechnicalAssignment.Api.Persistance.Repositories
         public LiteDbContext(IOptions<LiteDbOptions> options)
         {
             Database = new LiteDatabase(options.Value.DatabaseLocation);
+            Database.DropCollection(nameof(Account));
+            Database.DropCollection(nameof(Customer));
+            Database.DropCollection(nameof(AccountTransaction));
         }
     }
 }
