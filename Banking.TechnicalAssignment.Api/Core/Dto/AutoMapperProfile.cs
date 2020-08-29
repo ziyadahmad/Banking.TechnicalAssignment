@@ -13,9 +13,8 @@ namespace Banking.TechnicalAssignment.Api.Core.Dto
         public AutoMapperProfile()
         {
             CreateMap<Account, AccountDto>().ReverseMap();
-            CreateMap<Customer,CustomerDto>().ReverseMap();
-            CreateMap<Account, AccountTransaction>().ReverseMap();
-            CreateMap<AccountTransaction, AccountTransactionDto>();
+            CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<AccountTransaction, AccountTransactionDto>().ReverseMap();            
         }
     }
 }

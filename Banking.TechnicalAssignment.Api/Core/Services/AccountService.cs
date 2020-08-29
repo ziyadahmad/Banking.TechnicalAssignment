@@ -26,15 +26,22 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
         public void CreateNewAccount(AccountDto accountDto)
         {
             var customer = _customerRepository.Get(x => x.CustomerId == accountDto.CustomerId);
-            var account = _mapper.Map(accountDto, new Account());
-            var accountTransaction = _mapper.Map(account, new AccountTransaction());
-
+            var account = _mapper.Map<Account>(accountDto);
             _accountRepository.Add(account);
-            _transactionRepository.Add(accountTransaction);
+
+            if (account.Balance > 0)
+            {
+                _transactionRepository.Add(new AccountTransaction
+                {
+                    AccountId = account.AccountId,
+                    Amount = account.Balance,
+                    Date = DateTimeOffset.Now
+                });
+            }
         }
 
         public Account GetAccount(int accountId)
-        {            
+        {
             return _accountRepository.Get(x => x.AccountId == accountId);
         }
 
@@ -45,7 +52,7 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
                 Customer = _mapper.Map<CustomerDto>(customer),
                 Account = _mapper.Map<AccountDto>(_accountRepository.Get(x => x.AccountId == customer.CustomerId)),
                 Transactions = _mapper.Map<IEnumerable<AccountTransactionDto>>(_transactionRepository.GetAllById(x => x.AccountId == customer.CustomerId))
-            };                        
+            };
         }
     }
 }

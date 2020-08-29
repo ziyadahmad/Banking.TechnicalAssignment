@@ -49,41 +49,14 @@ namespace Banking.TechnicalAssignment.Web.Controllers
                     _apiClient.Execute<int>(request);
                     return RedirectToActionPermanent("Index", new { id = accountViewModel.CustomerId });
                 }
+
+                return View();
             }
             catch (Exception)
             {                
                 throw;                
-            }
-
-            return Error();
-        }
-
-        [HttpGet]
-        public IActionResult AddTransaction(int customerId)
-        {
-            return View(new AccountViewModel { CustomerId = customerId });
-        }
-
-        [HttpPost]
-        public IActionResult AddTransaction(AccountViewModel accountViewModel)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var request = new RestRequest($"api/v1/account/opencurrent", Method.POST);
-                    request.AddJsonBody(accountViewModel);
-                    _apiClient.Execute<int>(request);
-                    return RedirectToActionPermanent("Index", new { id = accountViewModel.CustomerId });
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            return Error();
-        }
+            }            
+        }        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

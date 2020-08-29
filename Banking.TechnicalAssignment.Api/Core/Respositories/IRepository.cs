@@ -14,5 +14,7 @@ namespace Banking.TechnicalAssignment.Api.Core.Respositories
 
         IEnumerable<TEntity> GetAllById(Expression<Func<TEntity, bool>> predicate);
         void Add(TEntity entity);
+
+        bool Update(TEntity entity);
     }
 }

@@ -30,6 +30,8 @@ namespace Banking.TechnicalAssignment.Api
 
                     services.AddTransient<ICustomerService, CustomerService>();
                     services.AddTransient<IAccountService, AccountService>();
+                    services.AddTransient<ITransactionService, TransactionService>();
+                    services.AddTransient<ICustomerRepository, CustomerRepository>();
                     services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
                 });
     }

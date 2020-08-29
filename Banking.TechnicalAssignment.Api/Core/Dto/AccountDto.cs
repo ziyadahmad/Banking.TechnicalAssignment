@@ -17,8 +17,10 @@ namespace Banking.TechnicalAssignment.Api.Core.Dto
         [MapTo(nameof(Account.AccountId))]
         public int CustomerId { get; set; }
 
-        [JsonPropertyName("initialCredit")]
         public double Balance { get; set; }
+
+        [JsonPropertyName("initialCredit")]
+        private double InitialCredit { set { Balance = value; } }
     }
 
 }

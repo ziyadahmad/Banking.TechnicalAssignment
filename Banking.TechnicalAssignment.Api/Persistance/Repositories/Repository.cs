@@ -34,5 +34,10 @@ namespace Banking.TechnicalAssignment.Api.Persistance.Respositories
         {
             return _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).FindAll();
         }
+
+        public bool Update(TEntity entity)
+        {
+            return _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).Update(entity);
+        }
     }
 }

@@ -26,8 +26,7 @@ namespace Banking.TechnicalAssignment.Api.Controllers
         {
             try
             {
-                _customerService.AddCustomer(customer);
-                return Ok();
+                return Ok(_customerService.AddCustomer(customer));
             }
             catch (Exception ex)
             {
