@@ -1,0 +1,54 @@
+#Trigger builds only on all branches
+trigger:
+- master
+- develop
+- feature/*
+
+#Run build for all Pull Requests targetting develop branch
+pr:
+- develop
+
+#Create a unique name for the build based on your project requirements
+#BuildID is the unique ID for the build
+name: $(Year:yy).$(Month).$(DayOfMonth).$(BuildID)-$(SourceBranchName)
+
+variables:
+  AgentImage: "windows-latest"
+  system.debug: true 
+  BuildConfiguration: 'Release'
+
+stages:
+- stage: 'Build_Stage' #Stage name cannot have spaces
+  displayName: 'Build' #Name displayed when viewing in Azure DevOps
+  jobs:
+  - job: 'Build_Job' #Job name cannot have spaces
+    displayName: 'Application Build' #Name displayed when viewing in Azure DevOps
+    pool:
+      vmImage: $(AgentImage) 
+    steps:
+    - task: DotNetCoreInstaller@1
+      displayName: 'Use DotNet Core SDK'
+      inputs:
+        version: 3.x
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish API
+      inputs:
+        command: build        
+        projects: 'Banking.TechnicalAssignment.Api\Banking.TechnicalAssignment.Api.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish Web
+      inputs:
+        command: build        
+        projects: 'Banking.TechnicalAssignment.Web\Banking.TechnicalAssignment.Web.csproj'
+        arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)/web'
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: test
+        projects: '**/*.Tests.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
+    
