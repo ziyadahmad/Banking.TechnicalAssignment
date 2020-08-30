@@ -35,14 +35,14 @@ stages:
       displayName: Publish API
       inputs:
         command: build        
-        projects: '**/Banking.TecnicalAssignment.Api/*.csproj'
+        projects: 'Banking.TechnicalAssignment.Api\Banking.TechnicalAssignment.Api.csproj'
         arguments: '--configuration $(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
       displayName: Publish Web
       inputs:
         command: build        
-        projects: '**/Banking.TecnicalAssignment.Web/*.csproj'
+        projects: 'Banking.TechnicalAssignment.Web\Banking.TechnicalAssignment.Web.csproj'
         arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)/web'
 
     - task: DotNetCoreCLI@2
