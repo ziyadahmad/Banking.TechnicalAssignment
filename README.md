@@ -24,5 +24,7 @@ git clone https://github.com/ziyadahmad/Banking.TechnicalAssignment.git
   
 ### CI/CD
 
+[![Build Status](https://dev.azure.com/ziyadahmad747/Banking.TechnicalAssignment/_apis/build/status/ziyadahmad.Banking.TechnicalAssignment?branchName=develop)](https://dev.azure.com/ziyadahmad747/Banking.TechnicalAssignment/_build/latest?definitionId=1&branchName=develop)
+
 Multi Stage pipeline script for Azure Devops is configured to Build and Test API and Web projects
   
