@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.TechnicalAssignment
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Banking.TechnicalAssignment.Web", "Banking.TechnicalAssignment.Web\Banking.TechnicalAssignment.Web.csproj", "{8223650C-F794-4A41-ADBF-3C31B04A1A42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking.TechnicalAssignment.Tests", "Banking.TechnicalAssignment.Tests\Banking.TechnicalAssignment.Tests.csproj", "{C4D60802-6EC0-4EE5-B3D7-5CC1358E2811}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8223650C-F794-4A41-ADBF-3C31B04A1A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8223650C-F794-4A41-ADBF-3C31B04A1A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8223650C-F794-4A41-ADBF-3C31B04A1A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D60802-6EC0-4EE5-B3D7-5CC1358E2811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D60802-6EC0-4EE5-B3D7-5CC1358E2811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D60802-6EC0-4EE5-B3D7-5CC1358E2811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D60802-6EC0-4EE5-B3D7-5CC1358E2811}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
