@@ -38,7 +38,7 @@ git clone https://github.com/ziyadahmad/Banking.TechnicalAssignment.git
   dotnet run Banking.TechnicalAssignment.Api.csproj  
   ```
   
-  API listens on port 3000/3001(https). Swagger is available at the endpoint address
+  API listens on port 3000. Swagger is available at the endpoint address
   
 #### Run Banking Assignment Web
   
@@ -61,7 +61,7 @@ git clone https://github.com/ziyadahmad/Banking.TechnicalAssignment.git
   dotnet run Banking.TechnicalAssignment.Web.csproj  
   ```
   
-  API listens on port 4000/4001(https)
+  Website opens on port 4000
   
 ### CI/CD
 
