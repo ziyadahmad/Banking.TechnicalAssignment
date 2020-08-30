@@ -33,8 +33,8 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
         }
 
         public IEnumerable<CustomerDto> GetAllCustomers()
-        {            
-            return _mapper.Map<IEnumerable<CustomerDto>>(_repository.GetAll());            
-        }                
+        {
+            return _mapper.Map<IEnumerable<CustomerDto>>(_repository.GetAll());
+        }
     }
 }
