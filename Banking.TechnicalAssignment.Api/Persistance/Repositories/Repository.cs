@@ -17,8 +17,7 @@ namespace Banking.TechnicalAssignment.Api.Persistance.Respositories
 
         public int Add(TEntity entity)
         {
-            var bson = _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).Insert(entity);
-            return bson.RawValue;
+            return _liteDatabase.GetCollection<TEntity>(typeof(TEntity).Name).Insert(entity).AsInt32;            
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> predicate)

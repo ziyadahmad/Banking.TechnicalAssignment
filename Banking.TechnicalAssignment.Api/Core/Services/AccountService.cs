@@ -25,11 +25,16 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
 
         public int CreateNewAccount(AccountDto accountDto)
         {
+            if (accountDto == null || accountDto.CustomerId < 1)
+            {
+                throw new ArgumentNullException("Null or account id is zero");
+            }
+
             var customer = _customerRepository.Get(x => x.CustomerId == accountDto.CustomerId);
             var account = _mapper.Map<Account>(accountDto);
             var accountId = _accountRepository.Add(account);
 
-            if (account.Balance > 0)
+            if (account.Balance != 0)
             {
                 _transactionRepository.Add(new AccountTransaction
                 {
@@ -49,6 +54,11 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
 
         public AccountSummary GetAccountSummary(Customer customer)
         {
+            if (customer == null || customer.CustomerId < 1)
+            {
+                throw new ArgumentNullException("Null or customer id is zero");
+            }
+
             return new AccountSummary
             {
                 Customer = _mapper.Map<CustomerDto>(customer),
