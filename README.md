@@ -2,8 +2,6 @@
 
 ### Packages or technologies used
 
-Below is a list of Dependencies used in this project.
-
 *  .Net Core 3.1
 *  Swashbuckle ( Swagger )
 *  RestSharp
