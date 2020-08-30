@@ -5,7 +5,7 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
 {
     public interface IAccountService
     {
-        void CreateNewAccount(AccountDto accountDto);
+        int CreateNewAccount(AccountDto accountDto);
         Account GetAccount(int accountId);
         AccountSummary GetAccountSummary(Customer customer);
     }

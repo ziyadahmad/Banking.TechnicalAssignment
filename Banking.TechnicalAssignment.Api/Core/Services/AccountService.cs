@@ -23,11 +23,11 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
             _mapper = mapper;
         }
 
-        public void CreateNewAccount(AccountDto accountDto)
+        public int CreateNewAccount(AccountDto accountDto)
         {
             var customer = _customerRepository.Get(x => x.CustomerId == accountDto.CustomerId);
             var account = _mapper.Map<Account>(accountDto);
-            _accountRepository.Add(account);
+            var accountId = _accountRepository.Add(account);
 
             if (account.Balance > 0)
             {
@@ -38,6 +38,8 @@ namespace Banking.TechnicalAssignment.Api.Core.Services
                     Date = DateTimeOffset.Now
                 });
             }
+
+            return accountId;
         }
 
         public Account GetAccount(int accountId)
