@@ -1,25 +1,54 @@
-pool:
-  name: Azure Pipelines
-steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Restore Nuget'
-  inputs:
-    command: restore
-    projects: '**/*.csproj'
+#Trigger builds only on all branches
+trigger:
+- master
+- develop
+- feature/*
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
-  inputs:
-    projects: '**/*.csproj'
+#Run build for all Pull Requests targetting develop branch
+pr:
+- develop
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet Test'
-  inputs:
-    command: test
-    projects: '**/*.csproj'
+#Create a unique name for the build based on your project requirements
+#BuildID is the unique ID for the build
+name: $(Year:yy).$(Month).$(DayOfMonth).$(BuildID)-$(SourceBranchName)
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+variables:
+  AgentImage: "windows-latest"
+  system.debug: true 
+  BuildConfiguration: 'Release'
+
+stages:
+- stage: 'Build_Stage' #Stage name cannot have spaces
+  displayName: 'Build' #Name displayed when viewing in Azure DevOps
+  jobs:
+  - job: 'Build_Job' #Job name cannot have spaces
+    displayName: 'Application Build' #Name displayed when viewing in Azure DevOps
+    pool:
+      vmImage: $(AgentImage) 
+    steps:
+    - task: DotNetCoreInstaller@1
+      displayName: 'Use DotNet Core SDK'
+      inputs:
+        version: 3.x
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish API
+      inputs:
+        command: build        
+        projects: '**/Banking.TecnicalAssignment.Api/*.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish Web
+      inputs:
+        command: build        
+        projects: '**/Banking.TecnicalAssignment.Web/*.csproj'
+        arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)/web'
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: test
+        projects: '**/*.Tests.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
+    
