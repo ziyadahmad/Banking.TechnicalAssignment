@@ -1,0 +1,65 @@
+﻿@model Banking.TechnicalAssignment.Web.Core.Domain.AccountSummary
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+
+@if (Model == null || Model.Account == null)
+{
+    <div class="row ml-4">
+        <a asp-action="AddAccount" asp-route-customerId="@Model.Customer.CustomerId" class="btn btn-primary">Add Account</a>
+    </div>
+
+    <div class="row p-3 mt-3">
+        <div class="col-md">
+            <h4>No Accounts Found for Customer</h4>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="row ml-4">
+            <a asp-action="AddTransaction" asp-controller="Transaction" asp-route-accountId="@Model.Customer.CustomerId" class="btn btn-primary">Add Transaction</a>
+        </div>
+    </div>
+
+    <div class="row p-3 mt-3">
+        <div class="col-md">
+            <h4>Account Id : @Model.Account.CustomerId</h4>
+            <h4>Balance : @Model.Account.Balance</h4>
+        </div>
+    </div>
+    <div class="row p-3 mt-3">
+        <div class="col-md">
+            @if (Model.Transactions == null || !Model.Transactions.Any())
+            {
+                <h5>No Transactions !!</h5>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var transaction in Model.Transactions)
+                        {
+                            <tr>
+                                <td>@transaction.Amount</td>
+                                <td>@transaction.Date</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+}
+
+
+
