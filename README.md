@@ -18,13 +18,53 @@ Download the code in newly created folder by cloning this repo.
 git clone https://github.com/ziyadahmad/Banking.TechnicalAssignment.git
 ```
 
-  - Build solution Banking.TechnicalAssignment.sln
-  - Set Target projects to target both Banking.TechnicalAssignment.Api.csproj and Banking.TechnicalAssignment.Web.csproj
-  - Run with Ctrl + F5
+#### Run Banking Assignment Api
+
+  Change directory into Banking.Assignment.Api
+  
+  ```
+  cd Banking.TechnicalAssignment.Api
+  ```
+  
+  Build Banking.Assignment.Api
+  
+  ```
+  dotnet build Banking.TechnicalAssignment.Api.csproj
+  ```
+  
+  Run Banking.Assignment.Api
+  
+  ```
+  dotnet run Banking.TechnicalAssignment.Api.csproj  
+  ```
+  
+  API listens on port 3000/3001(https). Swagger is available at the endpoint address
+  
+#### Run Banking Assignment Web
+  
+  
+  Change directory into Banking.Assignment.Web
+  
+  ```
+  cd Banking.TechnicalAssignment.Web
+  ```
+  
+  Build Banking.Assignment.Web
+  
+  ```
+  dotnet build Banking.TechnicalAssignment.Web.csproj
+  ```
+  
+  Run Banking.Assignment.Web
+  
+  ```
+  dotnet run Banking.TechnicalAssignment.Web.csproj  
+  ```
+  
+  API listens on port 4000/4001(https)
   
 ### CI/CD
 
 [![Build Status](https://dev.azure.com/ziyadahmad747/Banking.TechnicalAssignment/_apis/build/status/ziyadahmad.Banking.TechnicalAssignment?branchName=develop)](https://dev.azure.com/ziyadahmad747/Banking.TechnicalAssignment/_build/latest?definitionId=1&branchName=develop)
 
 Multi Stage pipeline script for Azure Devops is configured to Build and Test API and Web projects
-  
