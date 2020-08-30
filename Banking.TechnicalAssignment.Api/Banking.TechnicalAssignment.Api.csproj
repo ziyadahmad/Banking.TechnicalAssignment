@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AccountLiteDb-log.db" />
+    <None Remove="AccountLiteDb.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="LiteDB" Version="5.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
